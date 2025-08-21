@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YanzXNexuz Shop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-bg: linear-gradient(135deg, #1e3a8a, #9333ea, #f43f5e);
+      --primary-text-color: white;
+      --product-bg: white;
+      --product-text: #555;
+      --price-color: #1e3a8a;
+      --footer-bg: rgba(0,0,0,0.5);
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--primary-bg);
+      background-size: 400% 400%;
+      animation: bgAnimation 12s infinite alternate;
+      color: var(--primary-text-color);
+      transition: background 0.5s ease;
+      min-height: 100vh;
+    }
+
+    /* Tema 2 - Rainbow Theme */
+    body.theme-2 {
+      --primary-bg: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3') center/cover fixed;
+      --primary-text-color: #fff;
+      --product-bg: rgba(255, 255, 255, 0.9);
+      --product-text: #333;
+      --price-color: #ff3366;
+      --footer-bg: rgba(0, 0, 0, 0.7);
+      animation: none;
+    }
+
+    /* Tema 3 - Dark Theme */
+    body.theme-3 {
+      --primary-bg: #1a1a1a;
+      --primary-text-color: #ffffff;
+      --product-bg: rgba(50, 50, 50, 0.9);
+      --product-text: #dddddd;
+      --price-color: #ff3366;
+      --footer-bg: rgba(0, 0, 0, 0.8);
+      animation: none;
+    }
+
+    /* Tema 4 - Ocean Theme */
+    body.theme-4 {
+      --primary-bg: url('https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-4.0.3') center/cover fixed;
+      --primary-text-color: #ffffff;
+      --product-bg: rgba(255, 255, 255, 0.85);
+      --product-text: #333333;
+      --price-color: #0066cc;
+      --footer-bg: rgba(0, 51, 102, 0.7);
+      animation: none;
+    }
+
+    /* Tema 5 - Forest Theme */
+    body.theme-5 {
+      --primary-bg: url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3') center/cover fixed;
+      --primary-text-color: #ffffff;
+      --product-bg: rgba(255, 255, 255, 0.85);
+      --product-text: #333333;
+      --price-color: #228B22;
+      --footer-bg: rgba(34, 139, 34, 0.7);
+      animation: none;
+    }
+
+    /* Tema Custom - Background yang diunggah pengguna */
+    body.theme-custom {
+      --primary-bg: var(--custom-bg);
+      --primary-text-color: #ffffff;
+      --product-bg: rgba(255, 255, 255, 0.85);
+      --product-text: #333333;
+      --price-color: #1e3a8a;
+      --footer-bg: rgba(0, 0, 0, 0.7);
+      animation: none;
+    }
+
+    /* Efek rainbow bercahaya untuk teks pada tema 2 */
+    body.theme-2 .rainbow-text {
+      background: linear-gradient(90deg, #ff0000, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #9900ff, #ff00ff);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: rainbow-glow 2s linear infinite;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    @keyframes rainbow-glow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Panel pengaturan tema */
+    .theme-panel {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      padding: 15px;
+      width: 250px;
+      display: none;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .theme-panel h3 {
+      margin: 0 0 15px 0;
+      color: white;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .theme-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .theme-option {
+      height: 60px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .theme-option:hover {
+      transform: scale(1.05);
+      border-color: #facc15;
+    }
+
+    .theme-option.active {
+      border-color: #facc15;
+      box-shadow: 0 0 10px #facc15;
+    }
+
+    .theme-1-option {
+      background: linear-gradient(135deg, #1e3a8a, #9333ea, #f43f5e);
+    }
+
+    .theme-2-option {
+      background: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3') center/cover;
+    }
+
+    .theme-3-option {
+      background: #1a1a1a;
+    }
+
+    .theme-4-option {
+      background: url('https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-4.0.3') center/cover;
+    }
+
+    .theme-5-option {
+      background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3') center/cover;
+    }
+
+    .custom-upload {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .custom-upload-btn {
+      background: #4CAF50;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 5px;
+      transition: background 0.3s;
+      width: 100%;
+    }
+
+    .custom-upload-btn:hover {
+      background: #3e8e41;
+    }
+
+    #bgUpload {
+      display: none;
+    }
+
+    /* Tombol ganti tema */
+    .theme-switcher {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s;
+    }
+
+    .theme-switcher:hover {
+      transform: rotate(30deg);
+    }
+
+    .theme-switcher i {
+      font-size: 24px;
+      color: white;
+    }
+
+    @keyframes bgAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    /* Animasi teks YanzXNexuz */
+    .animated-text {
+      font-size: 2.8em;
+      font-weight: bold;
+      display: inline-block;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6, #facc15);
+      background-size: 300% 300%;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: gradientShift 6s infinite linear, typing 4s steps(20) 1s 1 normal both, blink 0.7s infinite;
+      border-right: 3px solid white; /* efek cursor */
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    header p {
+      margin: 10px 0;
+      color: var(--primary-text-color);
+      font-size: 1.2em;
+    }
+
+    .social-icons {
+      margin-top: 15px;
+    }
+
+    .social-icons a {
+      margin: 0 10px;
+      font-size: 1.8em;
+      color: var(--primary-text-color);
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .social-icons a:hover {
+      transform: scale(1.2) rotate(10deg);
+      color: #facc15;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product {
+      background: var(--product-bg);
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.2s;
+      cursor: pointer;
+      color: var(--product-text);
+    }
+
+    .product:hover {
+      transform: scale(1.05);
+    }
+
+    .product img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .product h3 {
+      margin: 10px 0 5px;
+      font-size: 1.2em;
+    }
+
+    .product p {
+      color: var(--product-text);
+      font-size: 0.9em;
+    }
+
+    /* Dropdown harga */
+    .price-dropdown {
+      margin-top: 8px;
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background-color: white;
+      color: var(--product-text);
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+
+    .price-dropdown:focus {
+      outline: none;
+      border-color: var(--price-color);
+    }
+
+    /* Tombol Bayar */
+    .buy-btn {
+      background: linear-gradient(135deg, #4CAF50, #2E7D32);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .buy-btn:hover {
+      background: linear-gradient(135deg, #2E7D32, #4CAF50);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Informasi pembayaran */
+    .payment-info {
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 5px;
+      text-align: left;
+      font-size: 0.8em;
+      display: none;
+    }
+
+    .payment-info h4 {
+      margin: 0 0 8px 0;
+      color: var(--price-color);
+      font-size: 1em;
+    }
+
+    .payment-method {
+      margin-bottom: 8px;
+    }
+
+    .payment-method:last-child {
+      margin-bottom: 0;
+    }
+
+    .qris-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .qris-image {
+      width: 80px;
+      height: 80px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .qris-image:hover {
+      transform: scale(1.05);
+    }
+
+    /* Modal QRIS */
+    .qris-modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .qris-modal-content {
+      max-width: 80%;
+      max-height: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .close-qris {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .close-qris:hover {
+      color: #f44336;
+    }
+
+    /* Tombol Detail Produk */
+    .detail-btn {
+      background: linear-gradient(135deg, #1e3a8a, #9333ea);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .detail-btn:hover {
+      background: linear-gradient(135deg, #9333ea, #1e3a8a);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Animasi Typing Text */
+    .typing-text {
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 5px;
+      min-height: 60px;
+      text-align: left;
+      font-size: 0.9em;
+      display: none;
+    }
+
+    .typing-text span {
+      display: inline-block;
+      overflow: hidden;
+      border-right: 2px solid var(--price-color);
+      white-space: nowrap;
+      animation: typing 3s steps(40, end), blink 0.7s step-end infinite;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .modal-content h3 {
+      margin-bottom: 15px;
+    }
+
+    .modal-buttons a {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn-wa { background: #25d366; }
+    .btn-wa:hover { background: #1ebe5d; }
+
+    .btn-tg { background: #0088cc; }
+    .btn-tg:hover { background: #0077b3; }
+
+    .close {
+      display: inline-block;
+      margin-top: 10px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: var(--footer-bg);
+      color: var(--primary-text-color);
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body class="theme-1">
+  <!-- Tombol ganti tema -->
+  <div class="theme-switcher" id="themeSwitcher">
+    <i class="fas fa-palette"></i>
+  </div>
+
+  <!-- Panel pilihan tema -->
+  <div class="theme-panel" id="themePanel">
+    <h3>Pilih Tema Background</h3>
+    <div class="theme-options">
+      <div class="theme-option theme-1-option active" data-theme="1"></div>
+      <div class="theme-option theme-2-option" data-theme="2"></div>
+      <div class="theme-option theme-3-option" data-theme="3"></div>
+      <div class="theme-option theme-4-option" data-theme="4"></div>
+      <div class="theme-option theme-5-option" data-theme="5"></div>
+    </div>
+    <div class="custom-upload">
+      <label for="bgUpload" class="custom-upload-btn">
+        <i class="fas fa-upload"></i> Unggah Background
+      </label>
+      <input type="file" id="bgUpload" accept="image/*">
+    </div>
+  </div>
+
+  <header>
+    <h1 class="animated-text">YanzXNexuz</h1>
+    <p class="rainbow-text">Website Sell Cheat termurah dan aman 100%</p>
+    <div class="social-icons">
+      <a href="https://www.tiktok.com/@yourtiktok" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/yourinstagram" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://t.me/YanzXNexuz" target="_blank"><i class="fab fa-telegram"></i></a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="products">
+      <div class="product" data-product="CHEAT ML STARCOOL">
+        <img src="https://i.imghippo.com/files/eeNN7614BI.png" alt="Produk 1">
+        <h3 class="rainbow-text">CHEAT ML STARCOOL</h3>
+        <p>CHEAT SAFE 100%</p>
+        <select class="price-dropdown" id="price-dropdown-1">
+          <option value="2.000">2 HOUR - Rp2K</option>
+          <option value="3.000">5 HOUR - Rp4K</option>
+          <option value="18.000">1 DAY - Rp18k</option>
+          <option value="20.000">3 DAY - Rp20k</option>
+          <option value="25.000">7 DAY - Rp25k</option>
+          <option value="70.000">60 DAY - Rp70k</option>
+          <option value="50.000">PERMANEN (PROMO) - Rp50k</option>
+        </select>
+        <button class="buy-btn" data-product="1">Bayar Sekarang</button>
+        <div class="payment-info" id="payment-info-1">
+          <h4>Metode Pembayaran:</h4>
+          <p>!!JIKA SUDA TF KONFIRMASI CHAT ADMIN DI WA ATAU TELEGRAM, KETUK PRODUK UNTUK MELIHAT NO ADMIN!!</p>
+          <div class="payment-method">
+            <strong>DANA:</strong> 0857-1060-4378
+          </div>
+          <div class="payment-method">
+            <strong>GOPAY:</strong> 0856-9340-3507
+          </div>
+          <div class="payment-method">
+            <strong>QRIS:</strong>
+            <div class="qris-container">
+              <img src="https://i.imghippo.com/files/IweD3705eI.png" alt="QR Code" class="qris-image">
+              <span>Klik untuk memperbesar</span>
+            </div>
+          </div>
+        </div>
+        <button class="detail-btn" data-product="1">LIST FITUR</button>
+        <div class="typing-text" id="typing-text-1"></div>
+      </div>
+      <div class="product" data-product="CHEAT BLOOD STREAK STARCOOL NEW!!">
+        <img src="https://i.imghippo.com/files/JVK6472BE.png" alt="Produk 2">
+        <h3 class="rainbow-text">CHEAT BLOOD STREAK STATCOOL!!</h3>
+        <p>CHEAT SAFE 100%</p>
+        <select class="price-dropdown" id="price-dropdown-2">
+          <option value="2.000">2 HOUR - Rp2K</option>
+          <option value="3.000">5 HOUR - Rp4K</option>
+          <option value="5.000">1 DAY - Rp5k</option>
+          <option value="10.00">3 DAY - Rp10k</option>
+          <option value="30.000">7 DAY - Rp30k</option>
+          <option value="50.000">60 DAY - Rp50k</option>
+          <option value="120.000">PERMANEN (PROMO) - Rp120k</option>
+        </select>
+        <button class="buy-btn" data-product="2">Bayar Sekarang</button>
+        <div class="payment-info" id="payment-info-2">
+          <h4>Metode Pembayaran:</h4>
+          <p>!!JIKA SUDA TF KONFIRMASI CHAT ADMIN DI WA ATAU TELEGRAM, KETUK PRODUK UNTUK MELIHAT NO ADMIN!!</p>
+          <div class="payment-method">
+            <strong>DANA:</strong> 0857-1060-4378
+          </div>
+          <div class="payment-method">
+            <strong>GOPAY:</strong> 0856-9340-3507
+          </div>
+          <div class="payment-method">
+            <strong>QRIS:</strong>
+            <div class="qris-container">
+              <img src="https://i.imghippo.com/files/IweD3705eI.png" alt="QR Code" class="qris-image">
+              <span>Klik untuk memperbesar</span>
+            </div>
+          </div>
+        </div>
+        <button class="detail-btn" data-product="2">LIST FITUR</button>
+        <div class="typing-text" id="typing-text-2"></div>
+      </div>
+      <div class="product" data-product="CHEAT CODM STARCOOL">
+        <img src="https://i.imghippo.com/files/BsD3410uc.png" alt="Produk 3">
+        <h3 class="rainbow-text">CHEAT CODM STARCOOL!!</h3>
+        <p>CHEAT SAFE 100%</p>
+        <select class="price-dropdown" id="price-dropdown-3">
+          <option value="3.000">2 HOUR - Rp3K</option>
+          <option value="4.000">5 HOUR - Rp4K</option>
+          <option value="10.000">1 DAY - Rp10k</option>
+          <option value="19.00">3 DAY - Rp19k</option>
+          <option value="31.000">7 DAY - Rp31k</option>
+          <option value="50.000">60 DAY - Rp50k</option>
+          <option value="70.000">PERMANEN (PROMO) - Rp70k</option>
+        </select>
+        <button class="buy-btn" data-product="3">Bayar Sekarang</button>
+        <div class="payment-info" id="payment-info-3">
+          <h4>Metode Pembayaran:</h4>
+          <p>!!JIKA SUDA TF KONFIRMASI CHAT ADMIN DI WA ATAU TELEGRAM, KETUK PRODUK UNTUK MELIHAT NO ADMIN!!</p>
+          <div class="payment-method">
+            <strong>DANA:</strong> 0857-1060-4378
+          </div>
+          <div class="payment-method">
+            <strong>GOPAY:</strong> 0856-9340-3507
+          </div>
+          <div class="payment-method">
+            <strong>QRIS:</strong>
+            <div class="qris-container">
+              <img src="https://i.imghippo.com/files/IweD3705eI.png" alt="QR Code" class="qris-image">
+              <span>Klik untuk memperbesar</span>
+            </div>
+          </div>
+        </div>
+        <button class="detail-btn" data-product="3">LIST FITUR</button>
+        <div class="typing-text" id="typing-text-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal QRIS -->
+  <div id="qrisModal" class="qris-modal">
+    <span class="close-qris">&times;</span>
+    <img class="qris-modal-content" id="qrisModalImg">
+  </div>
+
+  <!-- Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <h3 id="modalProductName"></h3>
+      <p id="modalProductPrice"></p>
+      <div class="modal-buttons">
+        <a id="waLink" href="#" target="_blank" class="btn-wa">Hubungi via WhatsApp</a>
+        <a id="tgLink" href="#" target="_blank" class="btn-tg">Hubungi via Telegram</a>
+      </div>
+      <span class="close">Tutup</span>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 YanzXNexuz Shop - All Rights Reserved
+  </footer>
+
+  <script>
+    // Fungsi untuk mengganti tema
+    const themeSwitcher = document.getElementById('themeSwitcher');
+    const themePanel = document.getElementById('themePanel');
+    const themeOptions = document.querySelectorAll('.theme-option');
+    const bgUpload = document.getElementById('bgUpload');
+    let currentTheme = 1;
+
+    // Toggle panel tema
+    themeSwitcher.addEventListener('click', () => {
+      themePanel.style.display = themePanel.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Pilih tema dari opsi yang tersedia
+    themeOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        const theme = option.getAttribute('data-theme');
+        
+        // Hapus kelas active dari semua opsi
+        themeOptions.forEach(opt => opt.classList.remove('active'));
+        // Tambahkan kelas active ke opsi yang dipilih
+        option.classList.add('active');
+        
+        // Terapkan tema yang dipilih
+        document.body.className = `theme-${theme}`;
+        currentTheme = theme;
+        
+        // Simpan preferensi tema di localStorage
+        localStorage.setItem('selectedTheme', theme);
+        localStorage.removeItem('customBackground');
+      });
+    });
+
+    // Unggah background kustom
+    bgUpload.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const bgImage = event.target.result;
+          
+          // Terapkan background kustom
+          document.body.classList.add('theme-custom');
+          document.body.style.setProperty('--custom-bg', `url(${bgImage}) center/cover fixed`);
+          
+          // Hapus kelas active dari semua opsi tema
+          themeOptions.forEach(opt => opt.classList.remove('active'));
+          
+          // Simpan background kustom di localStorage
+          localStorage.setItem('customBackground', bgImage);
+          localStorage.setItem('selectedTheme', 'custom');
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Load tema yang disimpan saat halaman dimuat
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('selectedTheme');
+      const customBg = localStorage.getItem('customBackground');
+      
+      if (savedTheme) {
+        if (savedTheme === 'custom' && customBg) {
+          document.body.classList.add('theme-custom');
+          document.body.style.setProperty('--custom-bg', `url(${customBg}) center/cover fixed`);
+        } else {
+          document.body.className = `theme-${savedTheme}`;
+          currentTheme = savedTheme;
+          
+          // Aktifkan opsi tema yang sesuai
+          themeOptions.forEach(option => {
+            if (option.getAttribute('data-theme') === savedTheme) {
+              option.classList.add('active');
+            } else {
+              option.classList.remove('active');
+            }
+          });
+        }
+      }
+    });
+
+    // Kode modal produk
+    const products = document.querySelectorAll(".product");
+    const modal = document.getElementById("productModal");
+    const modalProductName = document.getElementById("modalProductName");
+    const modalProductPrice = document.getElementById("modalProductPrice");
+    const waLink = document.getElementById("waLink");
+    const tgLink = document.getElementById("tgLink");
+    const closeBtn = document.querySelector(".close");
+
+    products.forEach(product => {
+      product.addEventListener("click", (e) => {
+        // Jangan buka modal jika yang diklik adalah tombol detail, dropdown, atau tombol bayar
+        if (e.target.classList.contains('detail-btn') || e.target.classList.contains('price-dropdown') || e.target.classList.contains('buy-btn') || e.target.classList.contains('qris-image')) {
+          return;
+        }
+        
+        const name = product.getAttribute("data-product");
+        const priceDropdown = product.querySelector('.price-dropdown');
+        const selectedOption = priceDropdown.options[priceDropdown.selectedIndex];
+        const priceText = selectedOption.text;
+        
+        modalProductName.textContent = name;
+        modalProductPrice.textContent = `Harga: ${priceText}`;
+
+        // Ganti dengan nomor WA / username Telegram kamu
+        waLink.href = `https://wa.me/62856934035079?text=Halo%20saya%20ingin%20beli%20${name}%20${priceText}`;
+        tgLink.href = `https://t.me/yanzns66`;
+
+        modal.style.display = "flex";
+      });
+    });
+
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    // Fungsi untuk animasi typing
+    function typeText(element, text, speed = 50) {
+      let i = 0;
+      element.innerHTML = ""; // Kosongkan elemen
+      element.style.display = "block"; // Tampilkan elemen
+      
+      const timer = setInterval(() => {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(timer);
+        }
+      }, speed);
+    }
+
+    // Data teks untuk setiap produk
+    const productDetails = {
+      1: "THE FITURE,ESP PLAYER,ESP LINE,ESP BOX ,ESP ALERT,ESP HEALTH,ESP MONSTER,ESP COOLDOWN,ESP SKILL,MINIMAP,DRONE VIEW,ROOM INFO,🥳FITURE LANJUTAN,ROOM WANGI",
+      2: "THE FITURE,ESP PLAYER,ESP LINE,ESP BOX,ESP NAME,ESP COUNT,ESP HEALTH,ESP DISTANCE,  FITUR AIMBOT,AIMBOT,BULLET TRACK,AIM LINE UNLOCK SKIN,NO RECOLI,NO SPEARD,HACK SPEED  !!FREE BYPASS!!",
+      3: "THE FITURE,ESP PLAYER,ESP LINE,ESP BOX,ESP NAME,ESP HEALTH,ESP DISTANCE, MENU AIMBOT AIMBOT 360,AIMBOT TRACK,HITBOX,NORECOIL,FAST SCOPE,FAST SWICH,SKIN HACK"
+    };
+
+    // Menambahkan event listener untuk tombol detail
+    document.querySelectorAll('.detail-btn').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.stopPropagation(); // Mencegah event bubbling ke parent product
+        const productId = this.getAttribute('data-product');
+        const typingElement = document.getElementById(`typing-text-${productId}`);
+        
+        // Jika teks sudah ditampilkan, sembunyikan
+        if (typingElement.style.display === 'block') {
+          typingElement.style.display = 'none';
+        } else {
+          // Jika belum, tampilkan dengan animasi typing
+          typeText(typingElement, productDetails[productId]);
+        }
+      });
+    });
+
+    // Event listener untuk dropdown harga
+    document.querySelectorAll('.price-dropdown').forEach(dropdown => {
+      dropdown.addEventListener('change', function() {
+        // Bisa ditambahkan logika jika diperlukan saat harga berubah
+        console.log(`Harga berubah: ${this.value}`);
+      });
+    });
+
+    // Event listener untuk tombol bayar
+    document.querySelectorAll('.buy-btn').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.stopPropagation(); // Mencegah event bubbling ke parent product
+        const productId = this.getAttribute('data-product');
+        const paymentElement = document.getElementById(`payment-info-${productId}`);
+        
+        // Jika info pembayaran sudah ditampilkan, sembunyikan
+        if (paymentElement.style.display === 'block') {
+          paymentElement.style.display = 'none';
+        } else {
+          // Jika belum, tampilkan
+          paymentElement.style.display = 'block';
+        }
+      });
+    });
+
+    // Modal QRIS
+    const qrisModal = document.getElementById("qrisModal");
+    const qrisModalImg = document.getElementById("qrisModalImg");
+    const closeQris = document.querySelector(".close-qris");
+
+    // Event listener untuk gambar QRIS
+    document.querySelectorAll('.qris-image').forEach(image => {
+      image.addEventListener('click', function() {
+        qrisModal.style.display = "flex";
+        qrisModalImg.src = this.src.replace('150x150', '300x300');
+      });
+    });
+
+    // Tutup modal QRIS
+    closeQris.addEventListener('click', function() {
+      qrisModal.style.display = "none";
+    });
+
+    // Tutup modal QRIS saat klik di luar gambar
+    window.addEventListener('click', function(e) {
+      if (e.target === qrisModal) {
+        qrisModal.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
